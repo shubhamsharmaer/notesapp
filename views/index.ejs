@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=h, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./stylesheets/style.css" rel="stylesheet">
+    <!-- <link href="./stylesheets/output.css" rel="stylesheet"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+        <div class="main w-full min-h-screen">
+
+        <div class="nav flex p-6 justify-between items-center">
+            <h1 class="text-3xl font-semibold text-center text-zinc-300">Flash Notes</h1>
+            <div class="hidden menu icons md:flex justify-center text-center gap-2">
+                <a href="/" class="bg-zinc-700  border-none rounded-xl px-3 py-2 hover:bg-[#236321] delay-100 transition-all ease-in-out"><i class="fa-solid fa-home text-zinc-300"></i></a>
+                <a class="bg-zinc-700  border-none rounded-xl px-3 py-2 hover:bg-[#3087ff] delay-100 transition-all ease-in-out" href=""><i class="fa-solid text-xl text-zinc-300 fa-magnifying-glass"></i></a>
+                <a class="bg-zinc-700  border-none rounded-xl px-3 py-2 hover:bg-[#ff945e] delay-100 transition-all ease-in-out" href=""><i class=" fa-brands text-xl text-zinc-300 fa-github"></i></i></a>
+            </div>
+            <button onclick="handleMenu(), blurform()" class="md:hidden bg-zinc-700  border-none rounded-xl px-3 py-2 hover:bg-[#3087ff] delay-100 transition-all ease-in-out">
+                <i class="fa-solid text-xl text-zinc-300 fa-bars"></i>
+            </button>
+
+        </div>
+
+        <div id="nav-dialog" class="fixed z-10 md:hidden backdrop-blur-sm flex flex-col w-full justify-evenly items-center text-center inset-0 p-6
+        transition-all delay-200 ease-in-out">
+            <div class="icons flex flex-col w-full justify-center items-center text-center gap-2">
+                <a class="bg-zinc-300 w-1/2  border-none rounded-xl px-3 py-2 hover:bg-[#3087ff] delay-100 transition-all ease-in-out" href=""><i class="fa-solid text-xl text-zinc-700 mr-2 fa-magnifying-glass"></i>Search</a>
+                <a class="bg-zinc-300 w-1/2 border-none rounded-xl px-3 py-2 hover:bg-[#ff945e] delay-100 transition-all ease-in-out" href=""><i class="fa-brands text-xl text-zinc-700 mr-2 fa-github"></i>GitHub</a>
+            </div>
+            <button onclick="handleMenu()" class="w-1/2 md:hidden border-none rounded-xl px-3 py-2 bg-red-500">
+                <i class="fa-solid text-xl text-zinc-300 fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <!-- form -->
+        <div class="p-10 w-full flex flex-col justify-center text-center items-center">
+            <form class="form w-full transition delay-150 ease-in-out items-center" action="/create" method="post" id="noteForm">
+                <input class="resize-none mb-4 w-full md:w-1/2 mx-auto px-3 py-6 border rounded-lg bg-white/20 border-none text-xl text-white font-semibold
+                backdrop-blur-sm outline-none" type="text" placeholder="About" class="input" name="title" id="inputField" required>
+                <textarea class="resize-none mb-4 w-full md:w-1/2 mx-auto px-3 py-6 border rounded-lg bg-white/20 border-none text-xl text-white font-semibold
+                backdrop-blur-sm overflow-hidden outline-none" placeholder="Add Note" name="details" id="detailsField" required></textarea>
+
+                <!-- Select colors -->
+                 <!-- <div class="card-colors flex justify-center items-center text-center gap-3">
+                    
+                    <div id="color1" data-color="#fe99ff" class="card-1 border-none w-10 h-10 rounded-xl"></div>
+                    <div id="color2" data-color="#fe9e9f" class="card-2 border-none w-10 h-10 rounded-xl"></div>
+                    <div id="color3" data-color="#92f48f" class="card-3 border-none w-10 h-10 rounded-xl"></div>
+                    <div id="color4" data-color="#fef598" class="card-4 border-none w-10 h-10 rounded-xl"></div>
+                    <div id="color5" data-color="#9ffffe" class="card-5 border-none w-10 h-10 rounded-xl"></div>
+                 </div>
+                 <input type="hidden" name="color" id="colorField" value=""> -->
+
+                <input class="px-3 py-2 text-xl mt-4 mb-4 w-full md:w-1/2 font-semibold border-none rounded-lg bg-green-500 text-green-900" id="saveBtn" type="submit" value="Save">
+            </form>
+        </div>    
+
+            <!-- Saved Cards -->
+            <div class="p-10 save-cards w-full flex sm:flex-nowrap gap-2 flex-wrap justify-center items-center">
+                <% if(files.length > 0){ %>
+                    <% files.forEach(function(val){ %>
+                        <div class="card-2 cursor-pointer mb-4 w-full md:w-1/4
+                         px-3 py-6 border-none rounded-lg bg-fe99ff">
+                         <div class="container flex justify-between px-2 items-center">
+                            <p class="font-semibold text-xl"><%= val %></p>
+                            <div class="options bg-zinc-800 hover:bg-white hover:text-zinc-800 text-white border-none rounded-full px-3 py-2 flex gap-3">
+                                    <a href="/files/<%= val %>"><i class="fa-regular fa-eye"></i></a>                                
+                                <!-- <a href="/edit/<%= val %>" class="hover:text-white"><i class="fa-regular text-xl fa-pen-to-square"></i></a> -->
+                            </div>
+                         </div>
+                        </div>
+                        <% }) %>        
+                <% } else{ %>
+                    <div class="no-save text-center overflow-hidden mb-4 w-full md:w-1/2 px-3 py-6 rounded-lg border-none"><p class="font-semibold text-white/50 text-lg">No Notes Saved</p></div>
+                <% } %> 
+                
+                    <!-- <div class="hidden card-1 w-full md:w-1/2 overflow-hidden mb-4 px-3 py-6 border-none rounded-lg backdrop-blur-xl"><p class="font-semibold text-xl">UI concepts worth existing</p></div> -->
+                    <!-- <div class="hidden card-2 overflow-hidden mb-4 w-full md:w-1/2 px-3 py-6 border-none rounded-lg"><p class="font-semibold text-xl">Book Review: The Design of everyday things by Don Normon</p></div> -->
+                    <!-- <div class="hidden card-3 overflow-hidden mb-4 w-full px-3 py-6 border rounded-lg bg-fe9e9f"><p class="font-semibold text-xl">Animes produced by Ufotable</p></div> -->
+                    <!-- <div class="hidden card-4 overflow-hidden mb-4 w-full px-3 py-6 border rounded-lg bg-fe9e9f"><p class="font-semibold text-xl">Manages planned to read</p></div> -->
+
+            </div>
+        <!-- <div class="circle absolute rounded-full right-5 bottom-8">
+            <div onclick="openForm()" class="plus-btn flex flex-col justify-center text-center items-center border-none w-16 h-16 shadow-lg backdrop-blur-sm bg-white/20 rounded-full">
+                <i class="fa-regular text-white text-4xl fa-plus"></i>
+            </div>
+        </div> -->
+    </div>
+    <script src="./javascripts/script.js"></script>
+</body>
+</html>
