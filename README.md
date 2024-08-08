@@ -1,4 +1,4 @@
-# 📝 NotesApp
+# 📝 Notes App
 
 Welcome to **NotesApp** - Your simple yet powerful notes management tool! With NotesApp, you can effortlessly create, view, and edit your notes to stay organized and productive.
 
